@@ -135,7 +135,7 @@ module SeedMigration
     private
     
     def is_postgres?
-      ActiveRecord::Base.connection.instance_of? ActiveRecord::ConnectionAdapters::MysqlAdapter 
+      ActiveRecord::Base.connection.instance_values["config"][:adapter] == "postgres"
     end
 
     def get_current_schema
