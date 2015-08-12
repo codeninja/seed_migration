@@ -32,6 +32,8 @@ module SeedMigration
         klass.new.up
         end_time = Time.now
         runtime = (end_time - start_time).to_d.round(2)
+  
+        change_schema(entry_schema)
 
         # Create record
         migration = SeedMigration::DataMigration.new
@@ -46,7 +48,6 @@ module SeedMigration
         announce("#{klass}: migrated (#{runtime}s)")
       end
 
-      change_schema(entry_schema)
     end
 
     def down
@@ -69,13 +70,14 @@ module SeedMigration
         klass.new.down
         end_time = Time.now
         runtime = (end_time - start_time).to_d.round(2)
+  
+        change_schema(entry_schema)
 
         # Delete record of migration
         migration.destroy
         announce("#{klass}: reverted (#{runtime}s)")
       end
 
-      change_schema(entry_schema)
     end
 
     # Rake methods
