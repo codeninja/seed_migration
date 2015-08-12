@@ -133,10 +133,13 @@ module SeedMigration
     private
 
     def get_current_schema
-      ActiveRecord.Base.execute("SHOW search_path;")
+      path = ActiveRecord.Base.execute("SHOW search_path;")
+      announce("Current schema is #{path}")
+      path
     end
 
     def change_schema(switch_to)
+      announce("Changing schema to #{switch_to}")
       ActiveRecord.Base.execute("SET search_path TO #{switch_to};")      
     end
 
