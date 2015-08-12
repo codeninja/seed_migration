@@ -137,7 +137,7 @@ module SeedMigration
     end
 
     def change_schema(switch_to)
-      ActiveRecord.Base.execute("SET search_path TO #{switch_to};"
+      ActiveRecord.Base.execute("SET search_path TO #{switch_to};")      
     end
 
     def class_from_path
