@@ -14,7 +14,7 @@ Using this auto generated seed file makes it quick and easy to setup new environ
 Add `gem 'seed_migration'` to your `Gemfile`:
 
 ```ruby
-gem 'seed_migration'
+gem 'seed_migration', :git => "git://github.com/codeninja/seed_migration"
 ```
 
 ## Usage
