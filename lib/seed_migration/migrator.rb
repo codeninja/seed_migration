@@ -134,16 +134,16 @@ module SeedMigration
 
     private
     
-    def postgres_check
+    def is_postgres?
       ActiveRecord::Base.connection.instance_of? ActiveRecord::ConnectionAdapters::MysqlAdapter 
     end
 
     def get_current_schema
-      ActiveRecord::Base.connection.schema_search_path
+      ActiveRecord::Base.connection.schema_search_path if is_postgres?
     end
 
     def change_schema(switch_to)
-      ActiveRecord::Base.connection.schema_search_path = switch_to
+      ActiveRecord::Base.connection.schema_search_path = switch_to if is_postgres?
     end
 
     def class_from_path
