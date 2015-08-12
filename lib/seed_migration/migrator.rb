@@ -133,6 +133,10 @@ module SeedMigration
     end
 
     private
+    
+    def postgres_check
+      ActiveRecord::Base.connection.instance_of? ActiveRecord::ConnectionAdapters::MysqlAdapter 
+    end
 
     def get_current_schema
       ActiveRecord::Base.connection.schema_search_path
