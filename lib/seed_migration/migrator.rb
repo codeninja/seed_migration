@@ -139,6 +139,7 @@ module SeedMigration
     end
 
     def change_schema(switch_to)
+      get_current_schema
       announce("Changing schema to #{switch_to}")
       ActiveRecord::Base.connection.schema_search_path = switch_to
     end
