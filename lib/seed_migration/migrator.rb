@@ -18,6 +18,9 @@ module SeedMigration
     end
 
     def up
+      # save current client schema
+      entry_schema = get_current_schema
+
       # Check if we already migrated this file
       klass = class_from_path
       version = @path.basename.to_s.split("_", 2).first
@@ -42,9 +45,14 @@ module SeedMigration
         end
         announce("#{klass}: migrated (#{runtime}s)")
       end
+
+      change_schema(entry_schema)
     end
 
     def down
+      # save current client schema
+      entry_schema = get_current_schema
+
       klass = class_from_path
       version = @path.basename.to_s.split("_", 2).first
 
@@ -66,6 +74,8 @@ module SeedMigration
         migration.destroy
         announce("#{klass}: reverted (#{runtime}s)")
       end
+
+      change_schema(entry_schema)
     end
 
     # Rake methods
@@ -121,6 +131,14 @@ module SeedMigration
     end
 
     private
+
+    def get_current_schema
+      ActiveRecord.Base.execute("SHOW search_path;")
+    end
+
+    def change_schema(switch_to)
+      ActiveRecord.Base.execute("SET search_path TO #{switch_to};"
+    end
 
     def class_from_path
       announce("Loading migration class at '#{@path}'")

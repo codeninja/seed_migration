@@ -19,6 +19,10 @@ module SeedMigration
       def contents
         <<STRING
 class #{file_name.camelize} < SeedMigration::Migration
+  # Think twice before you use Client.switch_to in these migrations.
+  # You may run into a race condition when looping through clients
+  # where schema migrations are behind.
+  
   def up
 
   end
